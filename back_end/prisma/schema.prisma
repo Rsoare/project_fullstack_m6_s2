@@ -2,10 +2,32 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+   provider = "sqlite"
+   url      = env("DATABASE_URL")
+}
+
+model Client {
+   id Int @id @default(autoincrement())
+   name String
+   email String @unique
+   telephone Int
+   createdAt DateTime @default(now())
+   contacts Contact[]
+
+   @@map("clients")
+}
+model Contact {
+   id Int @id @default(autoincrement())
+   name String
+   email String @unique
+   telephone Int
+   createdAt DateTime @default(now())
+   client Client? @relation(fields: [clientId],references: [id])
+   clientId Int?
+
+   @@map("contacts")
 }
