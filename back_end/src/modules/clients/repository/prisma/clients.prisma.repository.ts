@@ -25,7 +25,11 @@ export class ClientsPrismaRepository implements ClientsRepository {
    }
 
    async findAll(): Promise<Client[]> {
-      const clients: Client[] = await this.prisma.client.findMany();
+      const clients: Client[] = await this.prisma.client.findMany({
+         include: {
+            contacts: true,
+         },
+      });
       return plainToInstance(Client, clients);
    }
 
@@ -34,6 +38,9 @@ export class ClientsPrismaRepository implements ClientsRepository {
 
       const client = await this.prisma.client.findUnique({
          where: { id },
+         include: {
+            contacts: true,
+         },
       });
 
       return plainToInstance(Client, client);
