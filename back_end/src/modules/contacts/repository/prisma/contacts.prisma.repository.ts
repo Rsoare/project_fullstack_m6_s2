@@ -25,9 +25,7 @@ export class ContactPrismaRepository implements ContactsRepository {
    }
 
    async findAll(): Promise<Contact[]> {
-      const contacts: Contact[] = await this.prisma.contact.findMany({
-         include: { client: true },
-      });
+      const contacts: Contact[] = await this.prisma.contact.findMany();
       return plainToInstance(Contact, contacts);
    }
 
@@ -36,7 +34,6 @@ export class ContactPrismaRepository implements ContactsRepository {
 
       const contact = await this.prisma.contact.findUnique({
          where: { id },
-         include: { client: true },
       });
 
       return plainToInstance(Contact, contact);

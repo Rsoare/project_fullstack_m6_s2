@@ -11,23 +11,28 @@ datasource db {
 }
 
 model Client {
-   id Int @id @default(autoincrement())
-   name String
-   email String @unique
+   id        Int       @id @default(autoincrement())
+   name      String
+   password  String
+   email     String    @unique
    telephone Int
-   createdAt DateTime @default(now())
-   contacts Contact[]
+   createdAt DateTime  @default(now())
+   updatedAt DateTime  @updatedAt()
+   contacts  Contact[]
 
    @@map("clients")
 }
+
 model Contact {
-   id Int @id @default(autoincrement())
-   name String
-   email String @unique
+   id        Int      @id @default(autoincrement())
+   name      String
+   email     String   @unique
    telephone Int
+   address   String
    createdAt DateTime @default(now())
-   client Client? @relation(fields: [clientId],references: [id])
-   clientId Int?
+   updatedAt DateTime @updatedAt
+   client    Client   @relation(fields: [clientId], references: [id])
+   clientId  Int
 
    @@map("contacts")
 }
