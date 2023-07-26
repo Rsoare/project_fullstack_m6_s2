@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
 import { ContactsRepository } from './repository/contacts.repository';
@@ -15,15 +15,33 @@ export class ContactsService {
       return this.contactsRepository.findAll();
    }
 
-   findOne(id: string) {
-      return this.contactsRepository.findOne(id);
+   async findOne(id: string) {
+      const findContact = await this.contactsRepository.findOne(id);
+
+      if (!findContact) {
+         throw new NotFoundException('contact not found');
+      }
+
+      return findContact;
    }
 
-   update(id: string, data: UpdateContactDto) {
+   async update(id: string, data: UpdateContactDto) {
+      const findContact = await this.contactsRepository.findOne(id);
+
+      if (!findContact) {
+         throw new NotFoundException('contact not found');
+      }
+
       return this.contactsRepository.update(id, data);
    }
 
-   remove(id: string) {
+   async remove(id: string) {
+      const findContact = await this.contactsRepository.findOne(id);
+
+      if (!findContact) {
+         throw new NotFoundException('contact not found');
+      }
+
       return this.contactsRepository.delete(id);
    }
 }

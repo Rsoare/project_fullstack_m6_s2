@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { ContactsRepository } from '../contacts.repository';
 import { CreateContactDto } from '../../dto/create-contact.dto';
@@ -17,11 +17,16 @@ export class ContactPrismaRepository implements ContactsRepository {
          ...data,
       });
 
-      const newContact = await this.prisma.contact.create({
-         data: { ...contact },
-      });
-
-      return plainToInstance(Contact, newContact);
+      try {
+         const newContact = await this.prisma.contact.create({
+            data: { ...contact },
+         });
+         return plainToInstance(Contact, newContact);
+      } catch (error) {
+         if (error.code == 'P2002') {
+            throw new ConflictException('Email already registered');
+         }
+      }
    }
 
    async findAll(): Promise<Contact[]> {

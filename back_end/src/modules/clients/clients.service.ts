@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientsRepository } from './repository/clients.repository';
@@ -15,15 +15,32 @@ export class ClientsService {
       return this.clientsRepository.findAll();
    }
 
-   findOne(id: string) {
-      return this.clientsRepository.findOne(id);
+   async findOne(id: string) {
+      const findClient = await this.clientsRepository.findOne(id);
+
+      if (!findClient) {
+         throw new NotFoundException('client not found');
+      }
+      return findClient;
    }
 
-   update(id: string, data: UpdateClientDto) {
+   async update(id: string, data: UpdateClientDto) {
+      const findClient = await this.clientsRepository.findOne(id);
+
+      if (!findClient) {
+         throw new NotFoundException('client not found');
+      }
+
       return this.clientsRepository.update(id, data);
    }
 
-   remove(id: string) {
+   async remove(id: string) {
+      const findClient = await this.clientsRepository.findOne(id);
+
+      if (!findClient) {
+         throw new NotFoundException('client not found');
+      }
+
       return this.clientsRepository.delete(id);
    }
 }

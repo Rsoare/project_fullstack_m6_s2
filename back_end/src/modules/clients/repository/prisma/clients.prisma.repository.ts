@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { ClientsRepository } from '../clients.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { CreateClientDto } from '../../dto/create-client.dto';
@@ -17,11 +17,16 @@ export class ClientsPrismaRepository implements ClientsRepository {
          ...data,
       });
 
-      const newClient = await this.prisma.client.create({
-         data: { ...client },
-      });
-
-      return plainToInstance(Client, newClient);
+      try {
+         const newClient = await this.prisma.client.create({
+            data: { ...client },
+         });
+         return plainToInstance(Client, newClient);
+      } catch (error) {
+         if (error.code == 'P2002') {
+            throw new ConflictException('Email already registered');
+         }
+      }
    }
 
    async findAll(): Promise<Client[]> {
