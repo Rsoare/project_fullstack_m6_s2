@@ -23,8 +23,4 @@ export class CreateContactDto {
    @IsNotEmpty()
    @MaxLength(100)
    address: string;
-
-   @IsNumber()
-   @IsNotEmpty()
-   clientId: number;
 }

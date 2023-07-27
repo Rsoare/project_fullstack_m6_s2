@@ -10,4 +10,7 @@ export abstract class ClientsRepository {
    ): Promise<Client | undefined> | Client | undefined;
    abstract update(id: string, data: UpdateClientDto): Promise<Client> | Client;
    abstract delete(id: string): Promise<void> | void;
+   abstract findByEmail(
+      email: string,
+   ): Promise<Client | undefined> | undefined | Client;
 }

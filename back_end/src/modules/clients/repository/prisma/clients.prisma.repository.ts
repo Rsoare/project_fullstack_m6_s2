@@ -69,4 +69,12 @@ export class ClientsPrismaRepository implements ClientsRepository {
          where: { id },
       });
    }
+
+   async findByEmail(email: string): Promise<Client> {
+      const client = await this.prisma.client.findUnique({
+         where: { email },
+      });
+
+      return client;
+   }
 }

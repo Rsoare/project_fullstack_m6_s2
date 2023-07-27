@@ -7,8 +7,8 @@ import { ContactsRepository } from './repository/contacts.repository';
 export class ContactsService {
    constructor(private contactsRepository: ContactsRepository) {}
 
-   create(data: CreateContactDto) {
-      return this.contactsRepository.create(data);
+   create(data: CreateContactDto, clientId: string) {
+      return this.contactsRepository.create(data, clientId);
    }
 
    findAll() {

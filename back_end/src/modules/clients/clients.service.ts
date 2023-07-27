@@ -43,4 +43,8 @@ export class ClientsService {
 
       return this.clientsRepository.delete(id);
    }
+
+   findByEmail(email: string) {
+      return this.clientsRepository.findByEmail(email);
+   }
 }
