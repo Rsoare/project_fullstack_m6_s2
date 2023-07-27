@@ -9,7 +9,9 @@ import {
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local.auth.guard';
 import { LoginClientDto } from './dto/login.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Client/Login')
 @Controller('client/login')
 @UseGuards(LocalAuthGuard)
 @UseInterceptors(ClassSerializerInterceptor)
