@@ -6,8 +6,8 @@ import { FormCreateStyled } from "./styled";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Inputs from "../../Form/Inputs";
-import { iProductCreate } from "../../../contexts/products/@types";
-import { ProductsContext } from "../../../contexts/products";
+import { iProductCreate } from "../../../contexts/contact/@types";
+import { ProductsContext } from "../../../contexts/contact";
 import { CreateProductSchema } from "./validation";
 import { ClientsContext } from "../../../contexts/clients";
 import Autocompletes from "../../Form/Autocomplete";
@@ -17,124 +17,120 @@ import { OrderContext } from "../../../contexts/order";
 import { toast } from "react-toastify";
 
 interface iModalProps {
-   opemModalProduct: boolean;
-   setOpemModalProduct: React.Dispatch<React.SetStateAction<boolean>>;
+  opemModalProduct: boolean;
+  setOpemModalProduct: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ModalCreateProduct = ({
-   opemModalProduct,
-   setOpemModalProduct,
+  opemModalProduct,
+  setOpemModalProduct,
 }: iModalProps) => {
+  const { createProducts, getProducts, products } = useContext(ProductsContext);
+  const { clients } = useContext(ClientsContext);
+  const { orders } = useContext(OrderContext);
 
-   const { createProducts,getProducts,products } = useContext(ProductsContext);
-   const { clients } = useContext(ClientsContext);
-   const { orders } = useContext(OrderContext);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<iProductCreate>({ resolver: yupResolver(CreateProductSchema) });
 
-   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-   } = useForm<iProductCreate>({ resolver: yupResolver(CreateProductSchema) });
+  const modalClose = () => {
+    setOpemModalProduct(!opemModalProduct);
+  };
 
-   const modalClose = () => {
-      setOpemModalProduct(!opemModalProduct);
-   };
+  const submit: SubmitHandler<iProductCreate> = (data) => {
+    const checkId =
+      data.product_order_id !== undefined
+        ? data.product_order_id.toString()
+        : "";
 
-   const submit: SubmitHandler<iProductCreate> = (data) => {
-      
-      const checkId = data.product_order_id !== undefined? data.product_order_id.toString(): "";
+    const client = clients.find(
+      (client: iClients) => client.name_client == checkId
+    );
 
-      const client = clients.find(
-         (client: iClients) => client.name_client == checkId
-      );
+    const orderId = orders.find(
+      (order: iOrders) => order.client_id == client?.id
+    );
 
-      const orderId = orders.find(
-         (order: iOrders) => order.client_id == client?.id
-      );
+    if (!orderId) {
+      toast.error("Esse Cliente não possui pedido aberto");
+    }
 
-      if (!orderId) {
-         toast.error("Esse Cliente não possui pedido aberto");
-      }
+    const productOrder: number | undefined = orderId?.id;
 
-      const productOrder: number | undefined = orderId?.id;
+    const sku = new Date().getMilliseconds().toString();
 
-      const sku = new Date().getMilliseconds().toString();
+    const newData = {
+      ...data,
+      product_order_id: productOrder,
+      sku_product: `SKU${sku}`,
+    };
 
-      const newData = {
-         ...data,
-         product_order_id: productOrder,
-         sku_product: `SKU${sku}`,
-      };
+    createProducts(newData);
 
-      createProducts(newData);
+    modalClose();
+  };
 
-      modalClose();
-   };
+  useEffect(() => {
+    return () => {
+      getProducts();
+    };
+  }, [products]);
+  return (
+    <>
+      <Dialog
+        open={opemModalProduct}
+        keepMounted
+        onClose={modalClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <FormCreateStyled onSubmit={handleSubmit(submit)}>
+          <h3 className="Title Modal">Cadastrar Produto</h3>
+          <Inputs
+            type="text"
+            label="Nome:"
+            id="title_product"
+            error={errors.title_product}
+            register={register("title_product")}
+          />
+          <Inputs
+            type="text"
+            label="Estoque:"
+            id="stock_product"
+            register={register("stock_product")}
+            error={errors.stock_product}
+          />
+          <Inputs
+            type="text"
+            label="Preço:"
+            id="price_product"
+            register={register("price_product")}
+            error={errors.price_product}
+          />
 
-   useEffect(() => {
-   
-      return () => {
-         getProducts()
-      };
-   }, [products]); 
-   return (
-      <>
-         <Dialog
-            open={opemModalProduct}
-            keepMounted
-            onClose={modalClose}
-            aria-describedby="alert-dialog-slide-description"
-         >
-            <FormCreateStyled onSubmit={handleSubmit(submit)}>
-               <h3 className="Title Modal">Cadastrar Produto</h3>
-               <Inputs
-                  type="text"
-                  label="Nome:"
-                  id="title_product"
-                  error={errors.title_product}
-                  register={register("title_product")}
-               />
-               <Inputs
-                  type="text"
-                  label="Estoque:"
-                  id="stock_product"
-                  register={register("stock_product")}
-                  error={errors.stock_product}
-               />
-               <Inputs
-                  type="text"
-                  label="Preço:"
-                  id="price_product"
-                  register={register("price_product")}
-                  error={errors.price_product}
-               />
+          <Autocompletes
+            register={register("product_order_id")}
+            data={clients}
+          />
 
-               <Autocompletes
-                  register={register("product_order_id")}
-                  data={clients}
-               />
-
-               <DialogActions>
-                  <Button
-                     onClick={modalClose}
-                     size="medium"
-                     variant="contained"
-                  >
-                     Voltar
-                  </Button>
-                  <Button
-                     color="success"
-                     size="medium"
-                     variant="contained"
-                     type="submit"
-                  >
-                     Cadastrar
-                  </Button>
-               </DialogActions>
-            </FormCreateStyled>
-         </Dialog>
-      </>
-   );
+          <DialogActions>
+            <Button onClick={modalClose} size="medium" variant="contained">
+              Voltar
+            </Button>
+            <Button
+              color="success"
+              size="medium"
+              variant="contained"
+              type="submit"
+            >
+              Cadastrar
+            </Button>
+          </DialogActions>
+        </FormCreateStyled>
+      </Dialog>
+    </>
+  );
 };
 
 export default ModalCreateProduct;

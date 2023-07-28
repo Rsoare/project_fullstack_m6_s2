@@ -3,7 +3,6 @@ import { api } from "../../services/api";
 import { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import {
-   dataDelete,
    iClientCreate,
    iClientUpdate,
    iClients,
@@ -16,37 +15,39 @@ export const ClientsContext = createContext({} as iClientsContext);
 export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
    
    const [clients, setClients] = useState<iClients[]>([]);
-   const [pageClients, setPageClients] = useState<string>("1");
+
 
    const getClients = async () => {
       try {
-         const response = await api.get(
-            `/client?page=${pageClients}&perPage=20&id=DESC`
+         const response:AxiosResponse<iClients[]> = await api.get(
+            `/clients`
          );
 
          setClients(response.data);
+
       } catch (error) {
          console.error(error);
       }
    };
 
-   const deleteClients = async (data: dataDelete) => {
-      const { massDelete } = data;
-
+   const deleteClient = async (id: number) => {
+      
       try {
-         const response = await api.put(`/client`, data);
+         const response: AxiosResponse<void> = await api.patch(`/clients`);
 
-         const newOrderList = clients.filter(
-            (client: iClients) => client.id !== massDelete
+         const newClientList = clients.filter(
+            (client: iClients) => client.id !== id
          );
 
-         setClients(newOrderList);
+         setClients(newClientList);
+
       } catch (error) {
+         toast.success("Cliente deletado com sucesso");
          console.error(error);
       }
    };
 
-   const editClient = async (data: iClientUpdate,id:number) => {
+   const updateClient = async (data: iClientUpdate,id:number) => {
 
       try {
          const response: AxiosResponse<iClients> = await api.patch(
@@ -54,14 +55,14 @@ export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
             data
          );
 
-         const newOrderList = clients.map((client) => {
+         const newClientList = clients.map((client) => {
             if (client.id == id) {
                return { ...client, ...response.data };
             } else {
                return client;
             }
          });
-         setClients(newOrderList);
+         setClients(newClientList);
 
          toast.success("Cliente editado com sucesso");
       } catch (error) {
@@ -69,11 +70,10 @@ export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
       }
    };
 
-   const createClients = async (data:iClientCreate) => {
-
+   const createClient = async (data:iClientCreate) => {
 
       try {
-         const response:AxiosResponse<iClients> = await api.post("/client", data);
+         const response:AxiosResponse<iClients> = await api.post("/clients", data);
 
          setClients([...clients, response.data]);
 
@@ -90,12 +90,9 @@ export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
          value={{
             clients,
             getClients,
-            setPageClients,
-            pageClients,
-            deleteClients,
-            createClients,
-            editClient,
-            setClients
+            deleteClient,
+            updateClient,
+            createClient,
          }}
       >
          {children}

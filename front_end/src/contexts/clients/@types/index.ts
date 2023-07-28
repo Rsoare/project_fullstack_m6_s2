@@ -1,42 +1,39 @@
+import { iContact } from "../../contact/@types";
+
 export interface iDefaultProviderProps {
    children: React.ReactNode;
 }
 
-export interface dataDelete {
-   massDelete:number
-}
-
 export interface iClientsContext {
    clients: iClients[]
-   pageClients: string
    getClients: () => Promise<void>
-   setPageClients: React.Dispatch<React.SetStateAction<string>>
-   deleteClients: (data: dataDelete) => Promise<void>
-   createClients: (data: iClientCreate) => Promise<void>
-   editClient: (data: iClientUpdate, id: number) => Promise<void>
-   setClients: React.Dispatch<React.SetStateAction<iClients[]>>
+   deleteClient: (id: number) => Promise<void>
+   createClient: (data: iClientCreate) => Promise<void>
+   updateClient: (data: iClientUpdate, id: number) => Promise<void>
 }
 
 export interface iClients {
-   client_id: string;
    id:number
-   name_client:string
-   cpf_client:string
-   email_client:string
+   name:string
+   email:string
+   password?: string
+   telephone:number
    createdAt:string
    updatedAt:string
+   contacts: iContact[]
 }
 
 export interface iClientUpdate {
-   id:number
-   name_client?:string
-   cpf_client?:string
-   email_client?:string
+   name?:string
+   email?:string
+   password?: string
+   telephone?:number
 }
 export interface iClientCreate {
-   name_client:string
-   cpf_client:string
-   email_client:string
+   name:string
+   email:string
+   password: string
+   telephone:number
 }
 
 

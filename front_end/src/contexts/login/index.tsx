@@ -16,34 +16,34 @@ export const LoginProvider = ({ children }: iDefaultProviderProps) => {
 
    const navigate = useNavigate()
 
-   // useEffect(() => {
+   useEffect(() => {
 
-   //    if (token) {
+      if (token) {
          
-   //       const autoLogin = async () => {
+         const autoLogin = async () => {
             
-   //          const userid = jwt_decode<string>(token);
+            const userid = jwt_decode<string>(token);
 
-   //          try {
-   //             setLoad(false)
+            try {
+               setLoad(false)
 
-   //             const response = await api.get(`/login/${userid.sub}`);
+               const response = await api.get(`/clients/${userid.sub}`);
 
-   //             setUser(response.data);
+               setUser(response.data);
 
-   //             navigate('/Protected/Dashboard')
+               navigate('/Protected/Dashboard')
 
 
-   //          } catch (error) {
-   //             console.error(error);
-   //          }finally{
-   //             setLoad(true);
-   //          }
-   //       };
+            } catch (error) {
+               console.error(error);
+            }finally{
+               setLoad(true);
+            }
+         };
 
-   //       autoLogin();
-   //    }
-   // }, []);
+         autoLogin();
+      }
+   }, []);
 
 
    const userLogin = async (data: iUserLogin) => {
