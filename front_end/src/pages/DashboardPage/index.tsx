@@ -2,8 +2,6 @@ import Collections from "../../components/Collections";
 import NavBarDashboard from "../../components/Header/NavBarDashboard";
 
 
-
-
 const DashboardPage = () => {
 
 
@@ -13,7 +11,7 @@ const DashboardPage = () => {
             <NavBarDashboard />
          </header>
          <main className="container max-width-1200">
-            <Collections />
+            <Collections/>
          </main>
       </>
    );

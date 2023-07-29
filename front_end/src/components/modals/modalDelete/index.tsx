@@ -1,4 +1,3 @@
-
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,13 +6,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
-import { dataDelete } from "../../../contexts/order/@types";
+
 
 interface imodalProps {
    opemModal:boolean
    setOpemModal:React.Dispatch<React.SetStateAction<boolean>>
    id: number
-   requestDelete: (data: dataDelete) => Promise<void>
+   requestDelete: (id: number) => Promise<void>
 }
 
 const ModalDelete = ({opemModal,setOpemModal,id,requestDelete}:imodalProps) => {
@@ -36,11 +35,7 @@ const ModalDelete = ({opemModal,setOpemModal,id,requestDelete}:imodalProps) => {
 
    const submitDelete = () =>{
 
-      const data:dataDelete ={
-         massDelete:id
-      }
-
-      requestDelete(data)
+      requestDelete(id)
 
       setOpemModal(!opemModal)
    }

@@ -7,21 +7,21 @@ export interface iContact{
    name: string,
    email: string,
    telephone: number,
-   address: number,
+   address: string,
    createdAt: string,
    updatedAt: string,
 }
 export interface iContactUpdate{
-   name?: string,
-   email?: string,
-   telephone?: number,
-   address?: number,
+   name: string | null | undefined,
+   email: string | null | undefined,
+   telephone:number | null | undefined,
+   address: string | null | undefined,
 }
 export interface iContactCreate{
    name: string,
    email: string,
    telephone: number,
-   address: number,
+   address: string,
 }
 
 export interface iContactContext {

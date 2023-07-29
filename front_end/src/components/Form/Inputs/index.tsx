@@ -14,7 +14,7 @@ const Inputs = ({ id, label, type, register, error }: iInputProps) => {
       <fieldset>
          <div className="row " >
             <label htmlFor={id} className="label">{label}</label>
-            <input id={id} type={type} {...register} className="validate" />
+            <input id={id} type={type} {...register} className="validate"/>
             {error ? <p>{error.message}</p> : null}
          </div>
       </fieldset>

@@ -13,15 +13,13 @@ import {
 export const ClientsContext = createContext({} as iClientsContext);
 
 export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
-   
    const [clients, setClients] = useState<iClients[]>([]);
 
+   const token = localStorage.getItem("@kaliSystem:token");
 
    const getClients = async () => {
       try {
-         const response:AxiosResponse<iClients[]> = await api.get(
-            `/clients`
-         );
+         const response: AxiosResponse<iClients[]> = await api.get(`/clients`);
 
          setClients(response.data);
 
@@ -31,30 +29,36 @@ export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
    };
 
    const deleteClient = async (id: number) => {
-      
       try {
-         const response: AxiosResponse<void> = await api.patch(`/clients`);
+         const response: AxiosResponse<void> = await api.patch(`/clients`, {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
 
          const newClientList = clients.filter(
             (client: iClients) => client.id !== id
          );
 
          setClients(newClientList);
-
       } catch (error) {
          toast.success("Cliente deletado com sucesso");
          console.error(error);
       }
    };
 
-   const updateClient = async (data: iClientUpdate,id:number) => {
-
+   const updateClient = async (data: iClientUpdate, id: number) => {
       try {
          const response: AxiosResponse<iClients> = await api.patch(
             `/client/${id}`,
-            data
+            data,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
          );
-
+            
          const newClientList = clients.map((client) => {
             if (client.id == id) {
                return { ...client, ...response.data };
@@ -70,20 +74,20 @@ export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
       }
    };
 
-   const createClient = async (data:iClientCreate) => {
-
+   const createClient = async (data: iClientCreate) => {
       try {
-         const response:AxiosResponse<iClients> = await api.post("/clients", data);
+         const response: AxiosResponse<iClients> = await api.post(
+            "/clients",
+            data
+         );
 
          setClients([...clients, response.data]);
 
-         toast.success("Cliente cadastrado com sucesso")
+         toast.success("Cliente cadastrado com sucesso");
       } catch (error) {
          console.error(error);
       }
    };
-
-
 
    return (
       <ClientsContext.Provider

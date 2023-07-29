@@ -1,4 +1,4 @@
-import { createContext,useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { AxiosResponse } from "axios";
@@ -9,6 +9,8 @@ import {
    iContactUpdate,
    iContactCreate,
 } from "./@types";
+import { LoginContext } from "../login";
+
 
 export const ContactContext = createContext({} as iContactContext);
 
@@ -16,30 +18,42 @@ export const ContactProvide = ({ children }: iDefaultProviderProps) => {
 
    const [contacts, setContacts] = useState<iContact[]>([]);
 
+   const token = localStorage.getItem("@kaliSystem:token");
+
+   const {userContacts, setUserContacts} = useContext(LoginContext)
+   
    const getContacts = async () => {
       try {
          const response: AxiosResponse<iContact[]> = await api.get(
-            `/contacts`
+            `/contacts`,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
          );
 
-         setContacts(response.data);
-   
       } catch (error) {
          console.error(error);
       }
    };
 
-   const deleteContact = async (id:number) => {
-
+   const deleteContact = async (id: number) => {
       try {
-         const response: AxiosResponse<void> = await api.patch(`/contacts/${id}`);
+         const response: AxiosResponse<void> = await api.delete(`/contacts/${id}`,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
+         );
 
-         const newContactList = contacts.filter(
+         const newContactList = userContacts.filter(
             (contact: iContact) => contact.id !== id
          );
 
-         setContacts(newContactList);
-      } catch (error){
+         setUserContacts(newContactList);
+      } catch (error) {
          console.error(error);
       }
    };
@@ -48,10 +62,16 @@ export const ContactProvide = ({ children }: iDefaultProviderProps) => {
       try {
          const response: AxiosResponse<iContact> = await api.patch(
             `/contacts/${id}`,
-            data
+            data,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
          );
 
-         const newContactsList = contacts.map((contact) => {
+         const newContactsList = userContacts.map((contact) => {
+
             if (contact.id == id) {
                return { ...contact, ...response.data };
             } else {
@@ -59,9 +79,9 @@ export const ContactProvide = ({ children }: iDefaultProviderProps) => {
             }
          });
 
-         setContacts(newContactsList);
+         setUserContacts(newContactsList)
 
-         toast.success("Contato editado com Sucesso")
+         toast.success("Contato editado com Sucesso");
       } catch (error) {
          console.error(error);
       }
@@ -71,10 +91,15 @@ export const ContactProvide = ({ children }: iDefaultProviderProps) => {
       try {
          const response: AxiosResponse<iContact> = await api.post(
             "/contacts",
-            data
+            data,
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
          );
 
-         setContacts([...contacts, response.data]);
+         setUserContacts([...userContacts, response.data]);
 
          toast.success("Contato criado com sucesso");
       } catch (error) {
@@ -89,10 +114,12 @@ export const ContactProvide = ({ children }: iDefaultProviderProps) => {
             deleteContact,
             updateContact,
             createContact,
-            contacts
+            contacts,
          }}
       >
          {children}
       </ContactContext.Provider>
    );
 };
+
+

@@ -4,8 +4,7 @@ import Router from "./routes";
 import { GlobalTypography } from "./styles/Typography";
 import { GlobalStyles } from "./styles/global";
 import { ClientsProvide } from "./contexts/clients";
-import { OrderProvide } from "./contexts/order";
-import { ProductsProvide } from "./contexts/contact";
+import { ContactProvide } from "./contexts/contact";
 
 export const App = () => (
   <>
@@ -13,11 +12,9 @@ export const App = () => (
     <GlobalTypography />
     <LoginProvider>
       <ClientsProvide>
-        <OrderProvide>
-          <ProductsProvide>
+          <ContactProvide>
             <Router />
-          </ProductsProvide>
-        </OrderProvide>
+          </ContactProvide>
       </ClientsProvide>
     </LoginProvider>
     <ToastContainer

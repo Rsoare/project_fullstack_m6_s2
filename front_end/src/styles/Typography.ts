@@ -8,7 +8,12 @@ export const GlobalTypography = createGlobalStyle`
    letter-spacing: 0.10rem;
    color: var(--grey-0);
 }
-
+.Client.Name{
+   font-size: 1.4rem;
+   font-weight: 600;
+   letter-spacing: 0.10rem;
+   color: var(--grey-100);
+}
 .label{
    font-size: 0.90rem;
    font-weight: 400;

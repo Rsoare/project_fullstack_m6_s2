@@ -2,11 +2,8 @@
 import Dialog from "@mui/material/Dialog";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import React, { useContext } from "react";
-import FormEditProduct from "../../Form/FormEditProduct";
-import FormEditClient from "../../Form/FormEditClient";
-import FormEditOrder from "../../Form/FormEditOrder";
-import { DashboardPageContext } from "../../../contexts/dashboardPage";
+import React from "react";
+import FormEditContact from "../../Form/FormEditContact";
 
 interface iModalProps{
    opemModalEdit:boolean
@@ -25,10 +22,6 @@ const ModalEdit = ({opemModalEdit,setOpemModalEdit,id}:iModalProps) => {
       return <Slide direction="up" ref={ref} {...props} />;
    });
 
-
-   const {selectList} = useContext(DashboardPageContext)
-
-
    const modalClose = () => {
       setOpemModalEdit(!opemModalEdit);
    };
@@ -43,11 +36,7 @@ const ModalEdit = ({opemModalEdit,setOpemModalEdit,id}:iModalProps) => {
             aria-describedby="alert-dialog-slide-description"
          >
 
-            {selectList === "orders" && <FormEditOrder id={id} modalClose={modalClose}/>}
-
-            {selectList === "clients" && <FormEditClient id={id} modalClose={modalClose}/>}
-
-            {selectList === "products" && <FormEditProduct id={id} modalClose={modalClose}/> }
+            <FormEditContact id={id} modalClose={modalClose}/> 
 
          </Dialog>
       </>

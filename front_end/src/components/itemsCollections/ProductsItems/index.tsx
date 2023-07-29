@@ -1,91 +1,86 @@
 import { LiStyled } from "./styled";
-import ModalDelete from "../../modals/ModalDelete";
 import { useState, useContext } from "react";
-import { iProducts } from "../../../contexts/contact/@types";
-import { ProductsContext } from "../../../contexts/contact";
-import ModalEdit from "../../modals/ModalEdit";
+import { iContact } from "../../../contexts/contact/@types";
+import { ContactContext } from "../../../contexts/contact";
+import ModalDelete from "../../modals/modalDelete";
+import ModalEdit from "../../modals/modalEdit";
 
-interface iProductProps {
-  product: iProducts;
+
+interface iContactProps {
+   contact: iContact;
 }
-const ProductItems = ({ product }: iProductProps) => {
-  const { deleteProducts } = useContext(ProductsContext);
+const ContactItems = ({ contact }: iContactProps) => {
 
-  const [opemModal, setOpemModal] = useState(false);
-  const [opemModalEdit, setOpemModalEdit] = useState(false);
+   const { deleteContact } = useContext(ContactContext);
 
-  const {
-    id,
-    price_product,
-    sku_product,
-    title_product,
-    stock_product,
-    createdAt,
-  } = product;
+   const [opemModal, setOpemModal] = useState(false);
+   const [opemModalEdit, setOpemModalEdit] = useState(false);
 
-  const formatDate = new Date(createdAt).toLocaleDateString();
+   const {name,email,telephone,address,createdAt,id} = contact
 
-  return (
-    <>
-      <LiStyled className="collection-item grey lighten-3">
-        <div>
-          <p>
-            <span>Produto: </span>
-            {title_product}
-          </p>
-          <p>
-            <span>SKU: </span>
-            {sku_product}
-          </p>
-          <p>
-            <span>Preço: </span>
-            {price_product}
-          </p>
-          <p>
-            <span>Estoque: </span>
-            {stock_product}
-          </p>
-          <p>
-            <span>Data de cadastro: </span>
-            {formatDate}
-          </p>
-        </div>
-        <button>
-          <i
-            className="material-icons"
-            onClick={() => setOpemModal(!opemModal)}
-          >
-            delete_forever
-          </i>
-        </button>
-        <button>
-          <i
-            className="material-icons icon__edit"
-            onClick={() => setOpemModalEdit(!opemModalEdit)}
-          >
-            edit
-          </i>
-        </button>
-      </LiStyled>
+   const formatDate = new Date(createdAt).toLocaleDateString();
 
-      {opemModal && (
-        <ModalDelete
-          opemModal={opemModal}
-          setOpemModal={setOpemModal}
-          id={id}
-          requestDelete={deleteProducts}
-        />
-      )}
+   return (
+      <>
+         <LiStyled className="collection-item grey lighten-3">
+            <div>
+               <p>
+                  <span>Nome: </span>
+                  {name}
+               </p>
+               <p>
+                  <span>Email: </span>
+                  {email}
+               </p>
+               <p>
+                  <span>Telefone: </span>
+                  {telephone}
+               </p>
+               <p>
+                  <span>Endereço: </span>
+                  {address}
+               </p>
+               <p>
+                  <span>Data de cadastro: </span>
+                  {formatDate}
+               </p>
+            </div>
+            <button>
+               <i
+                  className="material-icons"
+                  onClick={() => setOpemModal(!opemModal)}
+               >
+                  delete_forever
+               </i>
+            </button>
+            <button>
+               <i
+                  className="material-icons icon__edit"
+                  onClick={() => setOpemModalEdit(!opemModalEdit)}
+               >
+                  edit
+               </i>
+            </button>
+         </LiStyled>
 
-      {opemModalEdit && (
-        <ModalEdit
-          opemModalEdit={opemModalEdit}
-          setOpemModalEdit={setOpemModalEdit}
-          id={id}
-        />
-      )}
-    </>
-  );
+         {opemModal && (
+            <ModalDelete
+               opemModal={opemModal}
+               setOpemModal={setOpemModal}
+               id={id}
+               requestDelete={deleteContact}
+            />
+         )}
+
+         {opemModalEdit && (
+            <ModalEdit
+               opemModalEdit={opemModalEdit}
+               setOpemModalEdit={setOpemModalEdit}
+               id={id}
+            />
+         )}
+      </>
+   );
 };
 
-export default ProductItems;
+export default ContactItems;

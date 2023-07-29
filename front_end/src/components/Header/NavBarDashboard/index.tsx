@@ -1,34 +1,24 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import MobileMenu from "../MobileMenu";
 import { ButtonNav } from "../../../styles/buttons";
-import { UlStyled } from "./styled";
-import { DashboardPageContext } from "../../../contexts/dashboardPage";
+import { AvatarClienteStyled, UlStyled } from "./styled";
 import { LoginContext } from "../../../contexts/login";
 const NavBarDashboard = () => {
    const [isMenuOpen, setMenuOpen] = useState(false);
 
-   const {userLogout} = useContext(LoginContext)
+   const { userLogout,user} = useContext(LoginContext);
+   const userName = user?.name
+
 
    const opemMenu = () => {
       setMenuOpen(!isMenuOpen);
    };
 
-   const {setSelectList} = useContext(DashboardPageContext)
-
-   const valueButton = (event:any) => {
-
-      setSelectList(event.value);
-   };
-
-
    return (
       <>
          <nav className="light-blue darken-4">
             <div className="nav-wrapper container max-width-1200">
-               <Link to="/Protected/Dashboard" className="brand-logo">
-                  Kali System
-               </Link>
+
                <a
                   href="#!"
                   className="sidenav-trigger"
@@ -41,15 +31,14 @@ const NavBarDashboard = () => {
                </a>
 
                <UlStyled className="right hide-on-med-and-down">
+                  <AvatarClienteStyled>
+                     {userName?.substring(0,1).toLocaleUpperCase()}
+                  </AvatarClienteStyled> 
+
                   <li>
-                     <ButtonNav  value="products" onClick={(event) => valueButton(event.target)}>Produtos</ButtonNav>
+                     <span className="Client Name">Nome: {userName}</span>
                   </li>
-                  <li>
-                     <ButtonNav value="clients"  onClick={(event) => valueButton(event.target)}>Clientes</ButtonNav>
-                  </li>
-                  <li>
-                     <ButtonNav value="orders" onClick={(event) => valueButton(event.target)}>Pedidos</ButtonNav>
-                  </li>
+
                   <li>
                      <ButtonNav onClick={userLogout}>Sair</ButtonNav>
                   </li>
