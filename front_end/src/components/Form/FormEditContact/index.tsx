@@ -34,28 +34,28 @@ const FormEditContact = ({ id, modalClose }: iFormProps) => {
          <h2 className="Title Modal"> Editar Contato</h2>
          <Inputs
             type="text"
-            label="Nome: (opcional)"
+            label="Nome: "
             id="name"
             error={errors.name}
             register={register("name")}
          />
          <Inputs
             type="text"
-            label="Email: (opcional)"
+            label="Email: "
             id="Email"
             register={register("email")}
             error={errors.email}
          />
          <Inputs
             type="text"
-            label="Telefone: (opcional)"
+            label="Telefone: "
             id="telephone"
             register={register("telephone")}
             error={errors.telephone}
          />
          <Inputs
             type="text"
-            label="Endereço: (opcional)"
+            label="Endereço: "
             id="address"
             register={register("address")}
             error={errors.address}

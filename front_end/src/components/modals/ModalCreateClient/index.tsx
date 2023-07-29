@@ -1,27 +1,22 @@
 import Dialog from "@mui/material/Dialog";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { ClientsContext } from "../../../contexts/clients";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Inputs from "../../Form/Inputs";
-import { iClientCreate} from "../../../contexts/clients/@types";
+import { iClientCreate } from "../../../contexts/clients/@types";
 import { CreateSchema } from "./validation";
 import { FormCreateStyled } from "./styled";
 
 interface iModalProps {
-   opemModalCreate: boolean;
-   setOpemModalCreate: React.Dispatch<React.SetStateAction<boolean>>;
+   opemModal: boolean;
+   setOpemModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-
-const ModalCreateClient = ({
-   opemModalCreate,
-   setOpemModalCreate,
-}: iModalProps) => {
-
-   const { createClients,getClients,clients} = useContext(ClientsContext);
+const ModalCreateClient = ({ opemModal, setOpemModal }: iModalProps) => {
+   const { createClient } = useContext(ClientsContext);
 
    const {
       register,
@@ -30,56 +25,53 @@ const ModalCreateClient = ({
    } = useForm<iClientCreate>({ resolver: yupResolver(CreateSchema) });
 
    const modalClose = () => {
-      setOpemModalCreate(!opemModalCreate);
+      setOpemModal(!opemModal);
    };
 
    const submit: SubmitHandler<iClientCreate> = (data) => {
-
-      createClients(data)
+      createClient(data);
 
       modalClose();
    };
 
-   useEffect(() => {
-   
-      return () => {
-         getClients()
-      };
-   }, [clients]); 
-
    return (
       <>
          <Dialog
-            open={opemModalCreate}
+            open={opemModal}
             keepMounted
             onClose={modalClose}
             aria-describedby="alert-dialog-slide-description"
          >
-
             <FormCreateStyled onSubmit={handleSubmit(submit)}>
+               <h3 className="Title Modal">Cadastrar Cliente</h3>
 
-            <h3 className="Title Modal">Cadastrar Cliente</h3>
-            
                <Inputs
                   type="text"
                   label="Nome:"
-                  id="name_client"
-                  error={errors.name_client}
-                  register={register("name_client")}
+                  id="name"
+                  error={errors.name}
+                  register={register("name")}
+               />
+               <Inputs
+                  type="email"
+                  label="Digite o seu E-mail"
+                  id="email"
+                  error={errors.email}
+                  register={register("email")}
+               />
+               <Inputs
+                  type="password"
+                  label="Digite a sua senha:"
+                  id="password"
+                  register={register("password")}
+                  error={errors.password}
                />
                <Inputs
                   type="text"
-                  label="CPF:"
-                  id="cpf_client"
-                  register={register("cpf_client")}
-                  error={errors.cpf_client}
-               />
-               <Inputs
-                  type="text"
-                  label="Email:"
-                  id="email_client"
-                  register={register("email_client")}
-                  error={errors.email_client}
+                  label="Telefone:"
+                  id="telephone"
+                  register={register("telephone")}
+                  error={errors.telephone}
                />
 
                <DialogActions>

@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { UlStyled } from "./styled";
 import { iContact } from "../../contexts/contact/@types";
 import ModalCreateContact from "../modals/ModalCreateContact";
-import ContactItems from "../itemsCollections/ProductsItems";
+import ContactItems from "../itemsCollections/ContactItems";
 import { LoginContext } from "../../contexts/login";
 
 const Collections = () => {

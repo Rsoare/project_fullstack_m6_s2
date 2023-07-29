@@ -5,7 +5,7 @@ export const FormCreateStyled = styled.form`
    display: flex;
    flex-direction: column;
    width: 22rem;
-   height: 34rem;
+   height: 46rem;
    padding: 1rem;
 
    h3{
@@ -14,7 +14,7 @@ export const FormCreateStyled = styled.form`
 
    @media (min-width: 800px) {
       width: 25rem;
-      height: 32rem;
+      height: 46rem;
       justify-content: center;
    }
 `;

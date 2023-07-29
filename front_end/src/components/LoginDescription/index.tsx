@@ -8,9 +8,9 @@ const LoginDescription = () => {
       <SectionStyled>
          <div>
             <p className="description Login">
-               Bem-vindo ao nosso sistema de gerenciamento de pedidos de compra.
-               Por favor, faça login para acessar sua conta e iniciar o processo
-               de cadastro de pedidos
+               Bem-vindo ao nosso sistema de gerenciamento de contatos,
+               Por favor faça login para acessar sua conta e iniciar o processo
+               de cadastro de contatos.
             </p>
 
             <figcaption>

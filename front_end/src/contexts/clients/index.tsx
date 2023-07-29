@@ -13,6 +13,7 @@ import {
 export const ClientsContext = createContext({} as iClientsContext);
 
 export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
+
    const [clients, setClients] = useState<iClients[]>([]);
 
    const token = localStorage.getItem("@kaliSystem:token");
@@ -30,7 +31,7 @@ export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
 
    const deleteClient = async (id: number) => {
       try {
-         const response: AxiosResponse<void> = await api.patch(`/clients`, {
+         const response: AxiosResponse<void> = await api.delete(`/clients/${id}`, {
             headers: {
                Authorization: `Bearer ${token}`,
             },
@@ -69,6 +70,7 @@ export const ClientsProvide = ({ children }: iDefaultProviderProps) => {
          setClients(newClientList);
 
          toast.success("Cliente editado com sucesso");
+
       } catch (error) {
          console.error(error);
       }

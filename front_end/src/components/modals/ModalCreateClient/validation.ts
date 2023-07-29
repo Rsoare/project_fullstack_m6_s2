@@ -1,11 +1,14 @@
 import * as yup from "yup";
 
 export const CreateSchema = yup.object().shape({
-   name_client: yup.string().required("Nome obrigatorio"),
+   name: yup.string().required("Nome obrigatorio"),
 
-   cpf_client: yup.string().required("CPF obrigatorio"),
+   password: yup
+      .string()
+      .min(8, "A senha deve conter mais de 8 digitos")
+      .required("Senha obrigatoria"),
 
-   email_client: yup
+   email: yup
       .string()
       .matches(/[a-z0-9.]+/, "Esse não e um E-mail valido ")
       .matches(/@/, "Esse não e um E-mail valido ")
@@ -13,4 +16,10 @@ export const CreateSchema = yup.object().shape({
       .matches(/\./, "Esse não e um E-mail valido ")
       .matches(/[a-z]+/, "Esse não e um E-mail valido ")
       .required(),
+
+   telephone: yup
+   .number()
+   .positive("Digite um número de telefone válido")
+   .typeError("Digite um número de telefone válido").required("Telefone obrigatorio"),
+
 });
