@@ -1,25 +1,21 @@
-# *Controle de projetos - teste_técnico_frontend*
-## Tecnologias Utilizadas; 
-- React
-- Vite
-- JavaScript
-- TypeScript
-- Mui/material
-- Axios
-- Jwt-decode
-- Materialize-css
-- React-Router-Dom
-- React-Toastify
-- Styled-Components
-- Yup
+# Projeto Front-end
 
- 
+## Introdução
+- O projeto foi construído principalmente utilizando [React.js](https://react.dev/) e [vite](https://vitejs.dev/guide/), e caso você tenha dúvidas sobre essas tecnologias, pode consultar suas documentações oficiais para obter informações detalhadas e orientações específicas
+  - Ducumentação - [React.js](https://react.dev/) 
+  - Ducumentação - [vite](https://vitejs.dev/guide/)
 
-## Link da aplicação na vercel: `front-end-pink-one.vercel.app`
+- Para iniciar a aplicação, basta seguir a sequência de comandos abaixo na raiz do projeto.
+ - Instalar as dependências
+ - Inicializar a aplicação
 
-## Todas as rotas foram configuradas para usar a ` baseURL: 'http://localhost:3000'`
+   
+## Intalando Dependencias 
+```bash
+$ npm install
+```
 
-## Usuario Admin 
-  - usuario principal da aplicação;   
-    - Usuário: `users@admin.com`
-    - Senha:  `123456`
+## Inicializando a aplicação
+```bash
+$ npm run dev
+```
