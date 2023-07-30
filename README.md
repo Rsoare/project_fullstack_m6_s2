@@ -8,3 +8,10 @@
 
 ### Projeto Back-End
 - Todas as informações necessárias para executar o projeto estão no README do projeto.
+
+## Contatos
+
+- Author - [Rihan Soares](portfolio-blue-three-14.vercel.app/#home)
+- Email - [rihan145@gmail.com](rihan145@gmail.com)
+- Linkedin - [Rihan Soares](https://www.linkedin.com/in/rihansoares/)
+
