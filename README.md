@@ -11,7 +11,7 @@
 
 ## Contatos
 
-- Author - [Rihan Soares](portfolio-blue-three-14.vercel.app/#home)
-- Email - [rihan145@gmail.com](rihan145@gmail.com)
+- Author - [Rihan Soares](https://portfolio-blue-three-14.vercel.app/#home)
+- Email - rihan145@gmail.com
 - Linkedin - [Rihan Soares](https://www.linkedin.com/in/rihansoares/)
 
