@@ -19,3 +19,6 @@ $ npm install
 ```bash
 $ npm run dev
 ```
+
+## Aviso 
+- A aplicação foi construída para funcionar em conjunto com a parte back-end desse projeto. Recomendo primeiro a inicialização do back-end para poder testar todas as funcionalidades do front-end.
