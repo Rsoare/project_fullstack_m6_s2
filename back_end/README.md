@@ -36,16 +36,41 @@ $ npm run dev
 ## Aviso 
   - Abaixo, apresentarei uma documentação simplificada das rotas e endpoints disponíveis na aplicação. No entanto, como mencionado anteriormente, é altamente recomendado que você leia a documentação completa no Swagger para obter informações       mais detalhadas e interativas sobre cada endpoint.
     
-## **Rotas - /login**
+## **Rotas - /client/login**
 
 ## Endpoints
 
 | Método | Endpoint              | Responsabilidade                                    |
 | ------ | --------------------- | --------------------------------------------------- |
-| POST   | /login                | Realiza o login com admin                           |
-| GET    | /login/:id            | Listar um admin e seus dados                        |
+| POST   | /client/login         | Realiza o login com o cliente                       |
 
 #
+
+## **Rotas - /clients**
+
+## Endpoints
+
+| Método | Endpoint                         | Responsabilidade                         |
+| ------ | -------------------------------- | ---------------------------------------- |
+| POST   | /clients                         | Cadastrar um novo cliente                |
+| GET    | /clients                         | Listar todos os cliente                  |
+| GET    | /clients/:id                     | Listar um cliente pelo id                |
+| PATCH  | /clients/:id                     | Atualizar um cliente pelo id             |
+| Delete | /clients/:id                     | Excluir cliente pelo id                  |
+
+#
+
+## **Rotas - /contacts**
+
+## Endpoints
+
+| Método | Endpoint                         | Responsabilidade                         |
+| ------ | -------------------------------- | ---------------------------------------- |
+| POST   | /contacts                        | Cadastrar um novo contato                |
+| GET    | /contacts                        | Listar todos os contatos                 |
+| GET    | /contacts/:id                    | Listar um contato pelo id                |
+| PATCH  | /contacts/:id                    | Atualizar um contato pelo id             |
+| Delete | /contacts/:id                    | Excluir contato pelo id                  |
 
 
 
