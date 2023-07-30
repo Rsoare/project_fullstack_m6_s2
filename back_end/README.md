@@ -72,6 +72,37 @@ $ npm run dev
 | PATCH  | /contacts/:id                    | Atualizar um contato pelo id             |
 | Delete | /contacts/:id                    | Excluir contato pelo id                  |
 
+## Configurar um novo banco de dados
+- A configuração do [SQLite](https://www.sqlite.org/index.html) foi feita seguindo as recomendações da documentação do [Nest.js](https://docs.nestjs.com/) e [Prisma](https://www.prisma.io/docs/getting-started).
+  - para obter informações detalhadas e orientações específicas recomento cunsultar essa seção da documentação [Defina a conexão do banco de dados Nest.js](https://docs.nestjs.com/recipes/prisma)
+  - para verificar compatibilidade com bancos de dados recomendo acessar o link acima.
 
-
+### Defina a conexão do banco de dados
+  - Sua conexão com o banco de dados está configurada no datasource bloco do seu schema.prisma arquivo. Por padrão, é definido como [SQLite](https://www.sqlite.org/index.html)
+    ```
+      datasource db {
+        provider = "sqlite"
+        url      = env("DATABASE_URL")
+      }
+      
+      generator client {
+        provider = "prisma-client-js"
+      }
+    ```
+    
+- Basta alterar as informações para o banco de dados desejado, neste exemplo usarei o [PostgreSql](https://www.postgresql.org/)
+  ```
+      datasource db {
+        provider = "postgresql"
+        url      = env("DATABASE_URL")
+      }
+      
+      generator client {
+        provider = "prisma-client-js"
+      }
+  ```
+- Agora, abra o arquivo .env e ajuste a DATABASE_URL variável de ambiente com as imformações do seu banco de dados, segue o exemplo abaixo:
+  ```
+      DATABASE_URL="postgres://Micro:123456@localhost:5432/lista_contato" //( DATABASE_URL="postgres://<Usuario>:<Senha>@localhost:<Porta>/<Nome do db>") 
+  ```
 
