@@ -1,48 +1,52 @@
 # Projeto Back-End
 
-## Inicializando projeto 
-- Apos clonar o repositorio instale as dependencias do projeto com o comando abaixo
+## Introdução
+- O projeto foi construído principalmente utilizando [Nest.js](https://docs.nestjs.com/) e [Prisma](https://www.prisma.io/docs/getting-started), e caso você tenha dúvidas sobre essas tecnologias, pode consultar suas documentações oficiais para obter informações detalhadas e orientações específicas
+  - Ducumentação - [Nest.js](https://docs.nestjs.com/)
+  - Ducumentação - [Prisma](https://www.prisma.io/docs/getting-started)
 
+- Por padrão, a aplicação está configurada com o banco de dados [SQLite](https://www.sqlite.org/index.html) e contém alguns scripts do Prisma e migrações iniciais para a criação das primeiras tabelas
+  - Essa configuração inicial não é recomendada para ambientes de produção, somente para testes e desenvolvimento. Ao longo desta documentação haverá mais informações sobre o assunto.  
+
+- Para iniciar a aplicação, basta seguir a sequência de comandos abaixo na raiz do projeto.
+  - Instalar as dependências
+  - Inicializar as migrações ( para realizar a criação das tabelas no banco de dados ) 
+  - Inicializar a aplicação
+    
+## Intalando Dependencias 
 ```bash
 $ npm install
 ```
 
-## Running the app
-
+## Inicializando as migrações
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ npx prisma migrate dev
 ```
 
-## Test
-
+## Inicializando a aplicação
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npm run dev
 ```
 
-## Support
+## Rotas e Endpoints
+- Com a aplicação inicializada, você terá acesso à documentação Swagger da aplicação, onde encontrará informações mais detalhadas sobre o funcionamento dos Endpoints da aplicação.
+  - O Swagger funcinara localmente utilizando a porta 3000 ( http://localhost:3000/api/docs#/ )
+  - Ducumentação da aplicação  - [Swagger](http://localhost:3000/api/docs#/)
+  
+## Aviso 
+  - Abaixo, apresentarei uma documentação simplificada das rotas e endpoints disponíveis na aplicação. No entanto, como mencionado anteriormente, é altamente recomendado que você leia a documentação completa no Swagger para obter informações       mais detalhadas e interativas sobre cada endpoint.
+    
+## **Rotas - /login**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Endpoints
 
-## Stay in touch
+| Método | Endpoint              | Responsabilidade                                    |
+| ------ | --------------------- | --------------------------------------------------- |
+| POST   | /login                | Realiza o login com admin                           |
+| GET    | /login/:id            | Listar um admin e seus dados                        |
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+#
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+
+
