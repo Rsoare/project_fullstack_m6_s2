@@ -78,7 +78,7 @@ $ npm run dev
   - para verificar compatibilidade com bancos de dados recomendo acessar o link acima.
 
 ### Defina a conexão do banco de dados
-  - Sua conexão com o banco de dados está configurada no datasource bloco do seu schema.prisma arquivo. Por padrão, é definido como [SQLite](https://www.sqlite.org/index.html)
+  - Sua conexão com o banco de dados está configurada no datasource do seu schema.prisma, Arquivo que foi definido como [SQLite](https://www.sqlite.org/index.html)
     ```
       datasource db {
         provider = "sqlite"
